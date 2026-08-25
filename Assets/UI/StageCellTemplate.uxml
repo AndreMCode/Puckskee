@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Button class="stage-cell">
+        <ui:Label name="stage-name-label" text="STAGE X" class="stage-name" />
+        <ui:VisualElement class="stage-image-placeholder" />
+        <ui:VisualElement class="stage-stats-row">
+            <ui:Label name="stat-turns" text="Turns: --" class="stage-stat" />
+            <ui:Label name="stat-dist" text="Dist: --" class="stage-stat" />
+        </ui:VisualElement>
+    </ui:Button>
+</ui:UXML>

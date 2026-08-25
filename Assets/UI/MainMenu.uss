@@ -1,0 +1,246 @@
+.menu-root {
+    flex-grow: 1;
+    background-color: #000000;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 80px;
+    -unity-font-style: bold;
+    color: #000000;
+    margin-bottom: 50px;
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: #FF0000;
+}
+
+.subtitle {
+    font-size: 50px;
+    -unity-font-style: bold;
+    color: #FF8000;
+    margin-bottom: 20px;
+    -unity-text-align: middle-center;
+}
+
+.menu-container {
+    width: 300px;
+    align-items: stretch;
+}
+
+.menu-button {
+    height: 60px;
+    margin-bottom: 15px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-width: 2px;
+    border-color: #FF0000;
+    border-radius: 10px;
+    color: #FF8000;
+    font-size: 24px;
+    -unity-font-style: bold;
+    transition-duration: 0.2s;
+}
+
+.menu-button:hover, .menu-button:focus {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #FF0000;
+    border-color: #FF8000;
+    scale: 1.05;
+}
+
+.menu-button:active {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+}
+
+.back-button {
+    margin-top: 30px;
+}
+
+.back-btn-fixed {
+    width: 300px;
+    align-self: center;
+}
+
+.version-text {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 14px;
+    color: #404040;
+}
+
+.unconfigured-button {
+    height: 60px;
+    margin-bottom: 15px;
+    background-color: rgba(32, 0, 0, 0.1);
+    border-width: 2px;
+    border-color: #404040;
+    border-radius: 10px;
+    color: #404040;
+    font-size: 24px;
+    -unity-font-style: bold;
+}
+
+/* ==========================
+   STAGE SELECT GRID
+   ========================== */
+.stage-container {
+    width: 900px; /* enough width for exactly 3 columns */
+    height: 1000px;
+    align-items: stretch;
+}
+
+.stage-scroll {
+    flex-grow: 1;
+    margin-bottom: 20px;
+}
+
+.stage-grid {
+    flex-direction: row;
+    flex-wrap: wrap; 
+    justify-content: center;
+}
+
+.stage-cell {
+    width: 250px;
+    height: 250px;
+    margin: 15px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-width: 2px;
+    border-color: #FF0000;
+    border-radius: 10px;
+    padding: 15px;
+    justify-content: space-between;
+}
+
+.stage-cell:hover, .stage-cell:focus {
+    border-color: #FF8000;
+    background-color: rgba(0, 0, 0, 0.1);
+    scale: 1.02;
+    transition-duration: 0.1s;
+}
+
+.stage-name {
+    color: white;
+    font-size: 22px;
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+}
+
+.stage-image-placeholder {
+    flex-grow: 1;
+    background-color: rgba(16, 16, 16, 0.1);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.stage-stats-row {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.stage-stat {
+    color: #FF8000;
+    font-size: 14px;
+    -unity-font-style: bold;
+}
+
+/* ==========================
+   STAGE RECORDS LIST
+   ========================== */
+.record-row {
+    flex-direction: row;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom-width: 1px;
+    border-color: rgba(255, 0, 0, 0.2);
+}
+
+.header-row {
+    border-bottom-width: 2px;
+    border-color: #FF0000;
+    margin-bottom: 10px;
+}
+
+.record-col-left {
+    width: 50%;
+    -unity-text-align: middle-left;
+    color: white;
+    margin: 4px 0px 2px 0px;
+    padding: 4px 0px 4px 0px;
+    font-size: 20px;
+    -unity-font-style: bold;
+}
+
+.record-col-right {
+    width: 25%;
+    -unity-text-align: middle-right;
+    color: #FF8000;
+    margin: 4px 0px 2px 0px;
+    padding: 4px 0px 4px 0px;
+    font-size: 20px;
+}
+
+.tiny-button {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    height: 25px;
+    width: 100px;
+    font-size: 12px;
+    background-color: rgba(32, 0, 0, 0.1);
+    border-width: 1px;
+    border-color: #404040;
+    color: #404040;
+    border-radius: 5px;
+}
+
+.tiny-button:hover, .tiny-button:focus {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+    scale: 1.05;
+}
+
+/* ==========================
+   CONFIRMATION OVERLAY
+   ========================== */
+.confirm-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.95);
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.confirm-text {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.confirm-btn {
+    height: 60px;
+    width: 120px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    background-color: rgba(32, 0, 0, 0.1);
+    border-width: 2px;
+    border-color: #404040;
+    border-radius: 10px;
+    color: #404040;
+    font-size: 24px;
+    -unity-font-style: bold;
+    transition-duration: 0.2s;
+}
+
+.confirm-btn:hover, .confirm-btn:focus {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+    scale: 1.05;
+}

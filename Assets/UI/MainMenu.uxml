@@ -1,0 +1,78 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainMenu.uss?fileID=7433441132597879392&amp;guid=034fec7373e0d914e95024609d978b01&amp;type=3#MainMenu"/>
+    <ui:VisualElement class="menu-root">
+
+        <!-- PERSISTENT TITLE -->
+        <ui:Label name="game-title" text="PUCKSKEE" class="title" />
+
+        <!-- MAIN MENU -->
+        <ui:VisualElement name="main-menu-container" class="menu-container">
+            <ui:Button name="btn-play" text="PLAY" class="menu-button"/>
+            <ui:Button name="btn-options" text="OPTIONS" class="menu-button"/>
+            <ui:Button name="btn-quit" text="QUIT" class="menu-button"/>
+        </ui:VisualElement>
+
+        <!-- DIFFICULTY MENU -->
+        <ui:VisualElement name="difficulty-container" class="menu-container" style="display: none;">
+            <ui:Button name="btn-easy" text="EASY" tooltip="Aim for the fewest turns!" class="menu-button"/>
+            <ui:Button name="btn-hard" text="HARD" tooltip="Aim for the shortest route!" class="menu-button"/>
+            <ui:Button name="btn-back-main" text="BACK" class="menu-button back-button" />
+        </ui:VisualElement>
+
+        <!-- GAME MODE MENU -->
+        <ui:VisualElement name="mode-container" class="menu-container" style="display: none;">
+            <ui:Button name="btn-1p" text="1P GAME" class="menu-button"/>
+            <ui:Button name="btn-2p" text="2P GAME" class="menu-button"/>
+            <ui:Button name="btn-back-difficulty" text="BACK" class="menu-button back-button" />
+        </ui:VisualElement>
+
+        <!-- OPTIONS MENU -->
+        <ui:VisualElement name="options-container" class="menu-container" style="display: none;">
+            <ui:Button name="btn-sound" text="SOUND SETTINGS" class="unconfigured-button"/>
+            <ui:Button name="btn-controls" text="CONTROL SETTINGS" class="unconfigured-button"/>
+            <ui:Button name="btn-records" text="RECORDS" class="menu-button"/>
+            <ui:Button name="btn-back-options" text="BACK" class="menu-button back-button" />
+        </ui:VisualElement>
+
+        <!-- RECORDS MENU -->
+        <ui:VisualElement name="records-container" class="stage-container" style="display: none;">
+            <ui:Label text="STAGE RECORDS" class="subtitle" />
+            
+            <!-- List Header -->
+            <ui:VisualElement class="record-row header-row">
+                <ui:Label text="STAGE NAME" class="record-col-left" />
+                <ui:Label text="TURNS" class="record-col-right" />
+                <ui:Label text="DISTANCE" class="record-col-right" />
+            </ui:VisualElement>
+
+            <!-- Scrollable List -->
+            <ui:ScrollView class="stage-scroll">
+                <ui:VisualElement name="records-list" />
+            </ui:ScrollView>
+
+            <ui:Button name="btn-back-records" text="BACK" class="menu-button back-button back-btn-fixed" style="margin-top: 0px;" />
+            <ui:Button name="btn-clear-prompt" text="CLEAR DATA" class="tiny-button" />
+
+            <!-- Confirmation Popup Overlay -->
+            <ui:VisualElement name="clear-confirm-overlay" class="confirm-overlay" style="display: none;">
+                <ui:Label text="Permanently delete all stage records?" class="confirm-text" />
+                <ui:VisualElement style="flex-direction: row; justify-content: center;">
+                    <ui:Button name="btn-confirm-yes" text="YES" class="confirm-btn" />
+                    <ui:Button name="btn-confirm-no" text="NO" class="confirm-btn" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- STAGE SELECT MENU -->
+        <ui:VisualElement name="stage-select-container" class="stage-container" style="display: none;">
+            <ui:Label text="SELECT STAGE" class="subtitle"/>
+            <ui:ScrollView class="stage-scroll">
+                <ui:VisualElement name="stage-grid" class="stage-grid"/>
+            </ui:ScrollView>
+            <ui:Button name="btn-back-mode" text="BACK" class="menu-button back-button back-btn-fixed" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+
+    <!-- PERSISTENT VERSION -->
+    <ui:Label name="game-version" text="v0.1.1.0" class="version-text" />
+</ui:UXML>

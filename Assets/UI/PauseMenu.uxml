@@ -1,0 +1,42 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Style src="PauseMenu.uss" />
+    <ui:VisualElement name="pause-root" class="pause-root" style="display: none;">
+
+        <!-- MAIN PAUSE PANEL -->
+        <ui:VisualElement name="pause-main-panel" class="pause-panel">
+            <ui:Label text="PAUSED" class="pause-title" />
+            <ui:Button name="btn-resume" text="RESUME" class="pause-button" />
+            <ui:Button name="btn-settings" text="SETTINGS" class="pause-button" />
+            <ui:Button name="btn-restart" text="RESTART" class="pause-button" />
+            <ui:Button name="btn-menu" text="MAIN MENU" class="pause-button" style="margin-top: 30px" />
+        </ui:VisualElement>
+
+        <!-- SETTINGS PANEL -->
+        <ui:VisualElement name="pause-settings-panel" class="pause-panel settings-panel" style="display: none;">
+            <ui:Label text="CAMERA SETTINGS" class="pause-title" />
+
+            <ui:VisualElement class="slider-container">
+                <ui:Label text="Horizontal Sensitivity" class="slider-label" />
+                <ui:Slider name="slider-sens-x" low-value="0.05" high-value="2.0" value="1.0" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="slider-container">
+                <ui:Label text="Vertical Sensitivity" class="slider-label" />
+                <ui:Slider name="slider-sens-y" low-value="0.05" high-value="2.0" value="1.0" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="slider-container">
+                <ui:Label text="Zoom Sensitivity" class="slider-label" />
+                <ui:Slider name="slider-sens-zoom" low-value="0.05" high-value="2.0" value="1.0" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="slider-container">
+                <ui:Label text="Spin Slider Sensitivity" class="slider-label" />
+                <ui:Slider name="slider-sens-spin" low-value="0.05" high-value="2.0" value="1.0" />
+            </ui:VisualElement>
+
+            <ui:Button name="btn-settings-back" text="BACK" class="pause-button" style="margin-top: 20px;" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

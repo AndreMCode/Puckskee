@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="Puckskee.UI" elementFormDefault="qualified" targetNamespace="Puckskee.UI" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="UnityEngine.UIElements.xsd" namespace="UnityEngine.UIElements" />
+  <xs:complexType name="PendulumMeterType">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="UnityEngine.UIElements" base="q1:VisualElementType">
+        <xs:choice />
+        <xs:attribute default="0.5" name="value" type="xs:float" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PendulumMeter" xmlns:q2="UnityEngine.UIElements" substitutionGroup="q2:VisualElement" type="tns:PendulumMeterType" />
+  <xs:complexType name="FillMeterType">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="UnityEngine.UIElements" base="q3:VisualElementType">
+        <xs:choice />
+        <xs:attribute default="0" name="value" type="xs:float" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FillMeter" xmlns:q4="UnityEngine.UIElements" substitutionGroup="q4:VisualElement" type="tns:FillMeterType" />
+  <xs:complexType name="OrbitLoopType">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q5="UnityEngine.UIElements" base="q5:VisualElementType">
+        <xs:choice />
+        <xs:attribute default="0" name="progress" type="xs:float" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OrbitLoop" xmlns:q6="UnityEngine.UIElements" substitutionGroup="q6:VisualElement" type="tns:OrbitLoopType" />
+</xs:schema>

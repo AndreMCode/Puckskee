@@ -1,0 +1,28 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:pk="Puckskee.UI">
+    <ui:Style src="MegatonPunch.uss" />
+
+    <ui:VisualElement name="root" class="root" picking-mode="Ignore">
+        <ui:VisualElement name="meter-container" class="meter-container" picking-mode="Ignore">
+
+            <ui:VisualElement class="meter-wrapper">
+                <ui:Label text="PACK" class="label" />
+                <pk:PendulumMeter name="pendulum" style="margin-top: 44px;" />
+                <ui:Label name="pendulum-score" text="" class="score-label" />
+            </ui:VisualElement>
+            
+            <ui:VisualElement class="meter-wrapper">
+                <ui:Label text="A" class="label" />
+                <pk:FillMeter name="fill" />
+                <ui:Label name="fill-score" text="" class="score-label" />
+            </ui:VisualElement>
+            
+            <ui:VisualElement class="meter-wrapper">
+                <ui:Label text="PUNCH" class="label" />
+                <pk:OrbitLoop name="orbit" />
+                <ui:Label name="orbit-score" text="" class="score-label" />
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+            <ui:Label name="strike-prompt" text="CLICK TO STRIKE" class="label" style="font-size: 40px; margin-top: 50px; display: none;" />
+    </ui:VisualElement>
+</ui:UXML>
