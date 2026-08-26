@@ -51,7 +51,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Fade_End: 24
+    - _Fade_End: 16
     - _Fade_Start: 0
     - _Grid_Scale: 1
     - _Line_Width: 0.03

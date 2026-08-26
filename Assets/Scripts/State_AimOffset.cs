@@ -6,7 +6,7 @@ public class State_AimOffset : IGameState
     private PuckMovementController _activePuck;
 
     private float _currentSpinOffset;
-    private float _spinSensitivity = 48f;
+    private float _spinSensitivity = 4;
     private Vector3 _hitNormal;
 
     public State_AimOffset(GameStateManager context) => _context = context;

@@ -42,13 +42,13 @@ public class AimTrajectoryManager : MonoBehaviour
             Vector3 bounce1Direction = CalculateBounce(direction, hit1, currentSpinOffset);
 
             // Nudge the start position slightly along the bounce vector to prevent self-intersection with the wall
-            Vector3 secondCastStartPos = puckCenterAtImpact1 + (bounce1Direction * 0.01f);
+            // Vector3 secondCastStartPos = puckCenterAtImpact1 + (bounce1Direction * 0.01f); <-- FLAGGED for removal
 
             // Subsequent SphereCast
-            if (Physics.SphereCast(secondCastStartPos, puckRadius, bounce1Direction, out RaycastHit hit2, _maxPredictionDistance * 0.25f, _bounceMask))
+            if (Physics.SphereCast(puckCenterAtImpact1, puckRadius, bounce1Direction, out RaycastHit hit2, _maxPredictionDistance * 0.25f, _bounceMask))
             {
                 // Calculate the true center of the puck at the second impact
-                Vector3 puckCenterAtImpact2 = secondCastStartPos + (bounce1Direction * hit2.distance);
+                Vector3 puckCenterAtImpact2 = puckCenterAtImpact1 + (bounce1Direction * hit2.distance);
 
                 // Draw line from the first impact center to the second impact center
                 DrawLine(_postBounceTail, puckCenterAtImpact1, puckCenterAtImpact2);

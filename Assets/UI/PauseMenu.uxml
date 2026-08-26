@@ -17,22 +17,22 @@
 
             <ui:VisualElement class="slider-container">
                 <ui:Label text="Horizontal Sensitivity" class="slider-label" />
-                <ui:Slider name="slider-sens-x" low-value="0.05" high-value="2.0" value="1.0" />
+                <ui:Slider name="slider-sens-x" low-value="0.05" high-value="5.0" value="0.5" />
             </ui:VisualElement>
 
             <ui:VisualElement class="slider-container">
                 <ui:Label text="Vertical Sensitivity" class="slider-label" />
-                <ui:Slider name="slider-sens-y" low-value="0.05" high-value="2.0" value="1.0" />
+                <ui:Slider name="slider-sens-y" low-value="0.05" high-value="5.0" value="0.5" />
             </ui:VisualElement>
 
             <ui:VisualElement class="slider-container">
                 <ui:Label text="Zoom Sensitivity" class="slider-label" />
-                <ui:Slider name="slider-sens-zoom" low-value="0.05" high-value="2.0" value="1.0" />
+                <ui:Slider name="slider-sens-zoom" low-value="0.05" high-value="5.0" value="0.5" />
             </ui:VisualElement>
 
             <ui:VisualElement class="slider-container">
                 <ui:Label text="Spin Slider Sensitivity" class="slider-label" />
-                <ui:Slider name="slider-sens-spin" low-value="0.05" high-value="2.0" value="1.0" />
+                <ui:Slider name="slider-sens-spin" low-value="0.05" high-value="5.0" value="0.5" />
             </ui:VisualElement>
 
             <ui:Button name="btn-settings-back" text="BACK" class="pause-button" style="margin-top: 20px;" />

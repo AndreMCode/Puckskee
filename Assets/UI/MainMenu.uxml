@@ -74,5 +74,5 @@
     </ui:VisualElement>
 
     <!-- PERSISTENT VERSION -->
-    <ui:Label name="game-version" text="v0.1.1.0" class="version-text" />
+    <ui:Label name="game-version" text="v0.1.1" class="version-text" />
 </ui:UXML>

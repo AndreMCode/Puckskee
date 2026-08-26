@@ -1,12 +1,156 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\pyro9\\unity projects\\puckskee2\\assets\\scripts\\environment\\aimtrajectorymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\environment\\aimtrajectorymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\pyro9\\unity projects\\puckskee2\\assets\\ui\\mainmenu.uxml||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\ui\\mainmenu.uxml||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\pyro9\\unity projects\\puckskee2\\assets\\scripts\\state_aimoffset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\state_aimoffset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\pyro9\\unity projects\\puckskee2\\assets\\scripts\\core\\cameradirector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\cameradirector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\pyro9\\unity projects\\puckskee2\\assets\\scripts\\state_aimdirection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\state_aimdirection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\pyro9\\unity projects\\puckskee2\\assets\\ui\\pausemenu.uxml||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\ui\\pausemenu.uxml||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\pyro9\\unity projects\\puckskee2\\assets\\scripts\\core\\pausemenucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\pausemenucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\pyro9\\unity projects\\puckskee2\\assets\\scripts\\core\\savemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\savemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainMenu.uxml",
+              "DocumentMoniker": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\UI\\MainMenu.uxml",
+              "RelativeDocumentMoniker": "Assets\\UI\\MainMenu.uxml",
+              "ToolTip": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\UI\\MainMenu.uxml",
+              "RelativeToolTip": "Assets\\UI\\MainMenu.uxml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEwAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2026-08-26T02:04:14.8Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AimTrajectoryManager.cs",
+              "DocumentMoniker": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\Scripts\\Environment\\AimTrajectoryManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Environment\\AimTrajectoryManager.cs",
+              "ToolTip": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\Scripts\\Environment\\AimTrajectoryManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Environment\\AimTrajectoryManager.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAA0wCwAAAB1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-26T01:57:38.818Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PauseMenu.uxml",
+              "DocumentMoniker": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\UI\\PauseMenu.uxml",
+              "RelativeDocumentMoniker": "Assets\\UI\\PauseMenu.uxml",
+              "ToolTip": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\UI\\PauseMenu.uxml",
+              "RelativeToolTip": "Assets\\UI\\PauseMenu.uxml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2026-08-26T00:07:48.481Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SaveManager.cs",
+              "DocumentMoniker": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\Scripts\\Core\\SaveManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\SaveManager.cs",
+              "ToolTip": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\Scripts\\Core\\SaveManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\SaveManager.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T23:58:05.515Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PauseMenuController.cs",
+              "DocumentMoniker": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\Scripts\\Core\\PauseMenuController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\PauseMenuController.cs",
+              "ToolTip": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\Scripts\\Core\\PauseMenuController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\PauseMenuController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T23:57:02.184Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CameraDirector.cs",
+              "DocumentMoniker": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\Scripts\\Core\\CameraDirector.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\CameraDirector.cs",
+              "ToolTip": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\Scripts\\Core\\CameraDirector.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\CameraDirector.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T23:53:14.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "State_AimDirection.cs",
+              "DocumentMoniker": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\Scripts\\State_AimDirection.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\State_AimDirection.cs",
+              "ToolTip": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\Scripts\\State_AimDirection.cs",
+              "RelativeToolTip": "Assets\\Scripts\\State_AimDirection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T23:54:40.531Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "State_AimOffset.cs",
+              "DocumentMoniker": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\Scripts\\State_AimOffset.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\State_AimOffset.cs",
+              "ToolTip": "C:\\Users\\pyro9\\Unity Projects\\Puckskee2\\Assets\\Scripts\\State_AimOffset.cs",
+              "RelativeToolTip": "Assets\\Scripts\\State_AimOffset.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T23:52:18.212Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

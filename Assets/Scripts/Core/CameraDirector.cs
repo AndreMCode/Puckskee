@@ -1,6 +1,5 @@
 using Unity.Cinemachine;
 using UnityEngine;
-// using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class CameraDirector : MonoBehaviour
 {
@@ -28,26 +27,27 @@ public class CameraDirector : MonoBehaviour
     [SerializeField] private Transform _offsetProxyTarget;
 
     [Header("Aiming Camera Controls")]
-    [SerializeField] private float _aimYawSpeed = 48f;
-    [SerializeField] private float _aimPitchSpeed = 32f;
-    [SerializeField] private float _aimMinPitch = 25f;
+    [SerializeField] private float _aimYawSpeed = 4f;
+    [SerializeField] private float _aimPitchSpeed = 4f;
+    [SerializeField] private float _aimMinPitch = 20f;
     [SerializeField] private float _aimMaxPitch = 80f;
-    [SerializeField] private float _zoomSpeed = 2f;
-    [SerializeField] private float _minZoomDistance = 2f;
+    [SerializeField] private float _zoomSpeed = 1f;
+    [SerializeField] private float _minZoomDistance = 8f;
     [SerializeField] private float _maxZoomDistance = 48f;
 
     [Header("Offset Camera Controls")]
+    // Spin Sensitivity is in State_Offset
     [SerializeField] private float _defaultOffsetHeight = 24f;
-    [SerializeField] private float _offsetZoomSpeed = 2f;
-    [SerializeField] private float _minOffsetZoom = 4f;
+    [SerializeField] private float _offsetZoomSpeed = 1f;
+    [SerializeField] private float _minOffsetZoom = 8f;
     [SerializeField] private float _maxOffsetZoom = 48f;
 
     [Header("Follow Camera Controls")]
-    [SerializeField] private float _followYawSpeed = 64;
-    [SerializeField] private float _followPitchSpeed = 48f;
-    [SerializeField] private float _followMinPitch = 25f;
+    [SerializeField] private float _followYawSpeed = 4;
+    [SerializeField] private float _followPitchSpeed = 4;
+    [SerializeField] private float _followMinPitch = 30f;
     [SerializeField] private float _followMaxPitch = 60f;
-    [SerializeField] private float _followZoomSpeed = 2f;
+    [SerializeField] private float _followZoomSpeed = 1f;
     [SerializeField] private float _minFollowZoom = 16f;
     [SerializeField] private float _maxFollowZoom = 64f;
 

@@ -2338,22 +2338,22 @@ MonoBehaviour:
   _vcamAiming: {fileID: 275517654}
   _vcamOffset: {fileID: 1745070083}
   _offsetProxyTarget: {fileID: 637877477}
-  _aimYawSpeed: 48
-  _aimPitchSpeed: 32
-  _aimMinPitch: 25
+  _aimYawSpeed: 4
+  _aimPitchSpeed: 4
+  _aimMinPitch: 20
   _aimMaxPitch: 80
-  _zoomSpeed: 2
+  _zoomSpeed: 1
   _minZoomDistance: 8
   _maxZoomDistance: 48
   _defaultOffsetHeight: 24
-  _offsetZoomSpeed: 2
+  _offsetZoomSpeed: 1
   _minOffsetZoom: 8
   _maxOffsetZoom: 48
-  _followYawSpeed: 64
-  _followPitchSpeed: 48
-  _followMinPitch: 25
+  _followYawSpeed: 4
+  _followPitchSpeed: 4
+  _followMinPitch: 30
   _followMaxPitch: 60
-  _followZoomSpeed: 2
+  _followZoomSpeed: 1
   _minFollowZoom: 16
   _maxFollowZoom: 64
 --- !u!1 &477310448
