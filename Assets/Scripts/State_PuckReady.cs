@@ -31,11 +31,14 @@ public class State_PuckReady : IGameState
         // Continue rendering the trajectory lines
         if (_context.TrajectoryManager != null)
         {
+            float maxDist = _activePuck.GetMaxTravelDistance(_context.MaxLaunchForce);
+
             _context.TrajectoryManager.ShowTrajectory(
                 _activePuck.transform.position,
                 _context.CurrentLaunchDirection,
                 _context.CurrentSpinOffset,
-                _activePuck.Radius
+                _activePuck.Radius,
+                maxDist
             );
         }
     }

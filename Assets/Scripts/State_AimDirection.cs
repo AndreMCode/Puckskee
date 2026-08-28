@@ -31,12 +31,14 @@ public class State_AimDirection : IGameState
         {
             // Draw the laser based on where the camera is looking
             Vector3 currentAim = _context.CameraDirector.GetCurrentAimDirection();
+            float maxDist = _activePuck.GetMaxTravelDistance(_context.MaxLaunchForce);
 
             _context.TrajectoryManager.ShowTrajectory(
                 _activePuck.transform.position,
                 currentAim,
                 _context.CurrentSpinOffset,
-                _activePuck.Radius
+                _activePuck.Radius,
+                maxDist
             );
         }
     }

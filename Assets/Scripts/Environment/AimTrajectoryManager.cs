@@ -1,20 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AimTrajectoryManager : MonoBehaviour
 {
-    [Header("Trajectory Visuals (Line Renderers)")]
-    [Tooltip("The primary line from the puck to the first collision.")]
-    [SerializeField] private LineRenderer _preBounceLine;
-
-    [Tooltip("The line showing where the puck goes after the first collision.")]
-    [SerializeField] private LineRenderer _postBounceTail;
-
-    [Tooltip("The line showing where the puck goes after the second collision.")]
-    [SerializeField] private LineRenderer _secondaryTail;
+    [Header("Trajectory Visuals")]
+    [Tooltip("The single continuous LineRenderer used for the entire trajectory.")]
+    [SerializeField] private LineRenderer _trajectoryLine;
 
     [Header("Parameters")]
-    [Tooltip("How far the laser sight should travel if it hits nothing.")]
-    [SerializeField] private float _maxPredictionDistance = 100f;
+    [Tooltip("The maximum number of times the prediction will bounce off walls before stopping.")]
+    [SerializeField] private int _maxBounces = 3;
 
     [Tooltip("The layers the trajectory laser should interact (collide) with.")]
     [SerializeField] private LayerMask _bounceMask;
@@ -22,97 +17,80 @@ public class AimTrajectoryManager : MonoBehaviour
     [Tooltip("Offsets the rendered line visually without affecting physics calculations.")]
     [SerializeField] private Vector3 _visualOffset = new(0f, -0.1f, 0f);
 
+    private readonly List<Vector3> _trajectoryPoints = new List<Vector3>(10);
+
     private void Awake()
     {
         HideTrajectory();
     }
 
-    public void ShowTrajectory(Vector3 startPos, Vector3 direction, float currentSpinOffset, float puckRadius)
+    public void ShowTrajectory(Vector3 startPos, Vector3 direction, float currentSpinOffset, float puckRadius, float maxDistance)
     {
-        // Initial SphereCast
-        if (Physics.SphereCast(startPos, puckRadius, direction, out RaycastHit hit1, _maxPredictionDistance, _bounceMask))
+        float remainingDist = maxDistance;
+        Vector3 currentPos = startPos;
+        Vector3 currentDir = direction;
+
+        _trajectoryPoints.Clear();
+        _trajectoryPoints.Add(currentPos); // Adds the initial point
+
+        for (int i = 0; i <= _maxBounces; i++)
         {
-            // Calculate the true center of the puck at the first impact
-            Vector3 puckCenterAtImpact1 = startPos + (direction * hit1.distance);
-
-            // Draw line to the impact center of the puck, not the wall surface
-            DrawLine(_preBounceLine, startPos, puckCenterAtImpact1);
-
-            // --- CALCULATE FIRST BOUNCE ---
-            Vector3 bounce1Direction = CalculateBounce(direction, hit1, currentSpinOffset);
-
-            // Nudge the start position slightly along the bounce vector to prevent self-intersection with the wall
-            // Vector3 secondCastStartPos = puckCenterAtImpact1 + (bounce1Direction * 0.01f); <-- FLAGGED for removal
-
-            // Subsequent SphereCast
-            if (Physics.SphereCast(puckCenterAtImpact1, puckRadius, bounce1Direction, out RaycastHit hit2, _maxPredictionDistance * 0.25f, _bounceMask))
+            if (Physics.SphereCast(currentPos, puckRadius, currentDir, out RaycastHit hit, remainingDist, _bounceMask))
             {
-                // Calculate the true center of the puck at the second impact
-                Vector3 puckCenterAtImpact2 = puckCenterAtImpact1 + (bounce1Direction * hit2.distance);
+                Vector3 impactCenter = currentPos + (currentDir * hit.distance);
+                _trajectoryPoints.Add(impactCenter);
 
-                // Draw line from the first impact center to the second impact center
-                DrawLine(_postBounceTail, puckCenterAtImpact1, puckCenterAtImpact2);
+                remainingDist -= hit.distance;
 
-                // --- CALCULATE SECOND BOUNCE ---
-                Vector3 bounce2Direction = CalculateBounce(bounce1Direction, hit2, 0f);
+                // Stop calculating if we've run out of distance OR hit our bounce limit
+                if (remainingDist <= 0.001f || i == _maxBounces) break;
 
-                // Draw final tail
-                Vector3 tailEnd = puckCenterAtImpact2 + (bounce2Direction.normalized * 3f);
-                DrawLine(_secondaryTail, puckCenterAtImpact2, tailEnd);
+                // Only the first collision calculates with the player's spin offset
+                float spinToApply = (i == 0) ? currentSpinOffset : 0f;
+
+                // Calculate bounce direction for the next loop iteration
+                currentDir = CalculateBounce(currentDir, hit, spinToApply);
+                currentPos = impactCenter;
             }
             else
             {
-                // No second collision, draw partial tail
-                Vector3 tailEnd = puckCenterAtImpact1 + (bounce1Direction.normalized * 5f);
-                DrawLine(_postBounceTail, puckCenterAtImpact1, tailEnd);
-
-                // Omit third line
-                SetLineActive(_secondaryTail, false);
+                // First cast hit nothing (open space cutoff)
+                Vector3 endPos = currentPos + (currentDir * remainingDist);
+                _trajectoryPoints.Add(endPos);
+                break; // Finished predicting
             }
         }
-        else
-        {
-            // First cast hit absolutely nothing (open space)
-            Vector3 endPos = startPos + (direction * _maxPredictionDistance);
-            DrawLine(_preBounceLine, startPos, endPos);
 
-            // Omit second and third lines
-            SetLineActive(_postBounceTail, false);
-            SetLineActive(_secondaryTail, false);
-        }
+        DrawTrajectory();
     }
 
     private Vector3 CalculateBounce(Vector3 incomingDirection, RaycastHit hit, float spinOffset)
     {
-        float multiplier = 1.0f;
-
         // Use the exact same math utility the Puck uses
-        // Pass the normalized direction as velocity. The utility returns the new direction.
         Vector3 exitVelocity = PuckPhysicsUtility.CalculateReflectionVelocity(
             incomingVelocity: incomingDirection.normalized,
             obstacleVelocity: Vector3.zero, // Assume static for aim preview
             surfaceNormal: hit.normal,
-            bouncinessMultiplier: multiplier,
             spinOffsetAngle: spinOffset
         );
 
         return exitVelocity.normalized;
     }
 
-    public Vector3 GetFirstHitPoint(Vector3 startPos, Vector3 direction, float puckRadius)
+    public Vector3 GetFirstHitPoint(Vector3 startPos, Vector3 direction, float puckRadius, float maxDistance)
     {
-        if (Physics.SphereCast(startPos, puckRadius, direction, out RaycastHit hit, _maxPredictionDistance, _bounceMask))
+        if (Physics.SphereCast(startPos, puckRadius, direction, out RaycastHit hit, maxDistance, _bounceMask))
         {
             return hit.point;
         }
 
         // Fallback if aiming into the void
-        return startPos + (direction * _maxPredictionDistance);
+        return startPos + (direction * maxDistance);
     }
 
-    public Vector3 GetFirstHitNormal(Vector3 startPos, Vector3 direction, float puckRadius)
+    public Vector3 GetFirstHitNormal(Vector3 startPos, Vector3 direction, float puckRadius, float maxDistance)
     {
-        if (Physics.SphereCast(startPos, puckRadius, direction, out RaycastHit hit, _maxPredictionDistance, _bounceMask))
+        if (Physics.SphereCast(startPos, puckRadius, direction, out RaycastHit hit, maxDistance, _bounceMask))
         {
             return hit.normal;
         }
@@ -123,31 +101,31 @@ public class AimTrajectoryManager : MonoBehaviour
 
     public void HideTrajectory()
     {
-        SetLineActive(_preBounceLine, false);
-        SetLineActive(_postBounceTail, false);
-        SetLineActive(_secondaryTail, false);
+        if (_trajectoryLine != null)
+        {
+            _trajectoryLine.gameObject.SetActive(false);
+        }
     }
 
     // ==========================================
     // UTILITY DRAWING
     // ==========================================
 
-    private void DrawLine(LineRenderer line, Vector3 start, Vector3 end)
+    private void DrawTrajectory()
     {
-        if (line == null) return;
+        if (_trajectoryLine == null) return;
 
-        SetLineActive(line, true);
-
-        // Apply the offset (lowering the line to the game floor)
-        line.SetPosition(0, start + _visualOffset);
-        line.SetPosition(1, end + _visualOffset);
-    }
-
-    private void SetLineActive(LineRenderer line, bool isActive)
-    {
-        if (line != null && line.gameObject.activeSelf != isActive)
+        if (!_trajectoryLine.gameObject.activeSelf)
         {
-            line.gameObject.SetActive(isActive);
+            _trajectoryLine.gameObject.SetActive(true);
+        }
+
+        _trajectoryLine.positionCount = _trajectoryPoints.Count;
+
+        for (int i = 0; i < _trajectoryPoints.Count; i++)
+        {
+            // Apply the offset (lowering the line to the game floor)
+            _trajectoryLine.SetPosition(i, _trajectoryPoints[i] + _visualOffset);
         }
     }
 }

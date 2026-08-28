@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuController
   _stageCellTemplate: {fileID: 9197481963319205126, guid: 12b72b7b2c1e6fe45860cefd3b61a8ec, type: 3}
-  _totalStages: 1
+  _totalStages: 2
 --- !u!4 &1188787661
 Transform:
   m_ObjectHideFlags: 0

@@ -1,8 +1,6 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 [RequireComponent(typeof(UIDocument))]
 public class PauseMenuController : MonoBehaviour

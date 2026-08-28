@@ -11,11 +11,19 @@ public class GameHUDController : MonoBehaviour
     private VisualElement _p1Container;
     private Label _p1TurnLabel;
     private Label _p1DistanceLabel;
+    private Slider _p1MassSlider;
+    private Label _p1MassLabel;
+    private Slider _p1FrictionSlider;
+    private Label _p1FrictionLabel;
 
     // Player 2 UI
     private VisualElement _p2Container;
     private Label _p2TurnLabel;
     private Label _p2DistanceLabel;
+    private Slider _p2MassSlider;
+    private Label _p2MassLabel;
+    private Slider _p2FrictionSlider;
+    private Label _p2FrictionLabel;
 
     // General UI & State
     private Label _playerLabel;
@@ -40,6 +48,7 @@ public class GameHUDController : MonoBehaviour
     // Game Over UI
     private VisualElement _medalContainer;
     private Label _medalLabel;
+    private Label _mathBreakdownLabel;
     private bool _isGameOverActive = false;
 
     private void Awake()
@@ -51,11 +60,19 @@ public class GameHUDController : MonoBehaviour
         _p1Container = root.Q<VisualElement>("p1-stats-container");
         _p1TurnLabel = root.Q<Label>("p1-turns-value");
         _p1DistanceLabel = root.Q<Label>("p1-distance-value");
+        _p1MassSlider = root.Q<Slider>("p1-mass-slider");
+        _p1MassLabel = root.Q<Label>("p1-mass-value");
+        _p1FrictionSlider = root.Q<Slider>("p1-friction-slider");
+        _p1FrictionLabel = root.Q<Label>("p1-friction-value");
 
         // Player 2 queries
         _p2Container = root.Q<VisualElement>("p2-stats-container");
         _p2TurnLabel = root.Q<Label>("p2-turns-value");
         _p2DistanceLabel = root.Q<Label>("p2-distance-value");
+        _p2MassSlider = root.Q<Slider>("p2-mass-slider");
+        _p2MassLabel = root.Q<Label>("p2-mass-value");
+        _p2FrictionSlider = root.Q<Slider>("p2-friction-slider");
+        _p2FrictionLabel = root.Q<Label>("p2-friction-value");
 
         _playerLabel = root.Q<Label>("player-label");
 
@@ -78,6 +95,7 @@ public class GameHUDController : MonoBehaviour
         // Game Over queries
         _medalContainer = root.Q<VisualElement>("medal-container");
         _medalLabel = root.Q<Label>("medal-label");
+        _mathBreakdownLabel = root.Q<Label>("math-breakdown-label");
 
         // Hide elements on awake
         HideMegatonSequence();
@@ -89,6 +107,8 @@ public class GameHUDController : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.OnDistanceUpdated += HandleDistanceUpdated;
+        GameEvents.OnMassUpdated += HandleMassUpdated;
+        GameEvents.OnFrictionUpdated += HandleFrictionUpdated;
         GameEvents.OnPlayerSwapped += HandlePlayerSwapped;
         GameEvents.OnTurnChanged += HandleTurnChanged;
         GameEvents.OnGameOver += HandleGameOver;
@@ -98,6 +118,8 @@ public class GameHUDController : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.OnDistanceUpdated -= HandleDistanceUpdated;
+        GameEvents.OnMassUpdated -= HandleMassUpdated;
+        GameEvents.OnFrictionUpdated -= HandleFrictionUpdated;
         GameEvents.OnPlayerSwapped -= HandlePlayerSwapped;
         GameEvents.OnTurnChanged -= HandleTurnChanged;
         GameEvents.OnGameOver -= HandleGameOver;
@@ -107,6 +129,34 @@ public class GameHUDController : MonoBehaviour
     // ==========================================
     // PASSIVE EVENT HANDLERS
     // ==========================================
+
+    private void HandleMassUpdated(int playerID, float newMass)
+    {
+        if (playerID == 1)
+            UpdateStatSlider(_p1MassSlider, _p1MassLabel, newMass);
+        else if (playerID == 2)
+            UpdateStatSlider(_p2MassSlider, _p2MassLabel, newMass);
+    }
+
+    private void HandleFrictionUpdated(int playerID, float newFriction)
+    {
+        if (playerID == 1)
+            UpdateStatSlider(_p1FrictionSlider, _p1FrictionLabel, newFriction);
+        else if (playerID == 2)
+            UpdateStatSlider(_p2FrictionSlider, _p2FrictionLabel, newFriction);
+    }
+
+    private void UpdateStatSlider(Slider slider, Label label, float value)
+    {
+        if (slider == null || label == null) return;
+
+        slider.value = value;
+        label.text = value.ToString("F1");
+
+        // Map value between lowValue and highValue to position label over the slider position
+        float normalizedValue = Mathf.InverseLerp(slider.lowValue, slider.highValue, value);
+        label.style.left = new StyleLength(Length.Percent(normalizedValue * 100f));
+    }
 
     private void HandlePlayerSwapped(int playerID)
     {
@@ -155,12 +205,19 @@ public class GameHUDController : MonoBehaviour
         }
     }
 
-    private void HandleGameOver(string resultMessage)
+    private void HandleGameOver(string resultMessage, string mathBreakdown = "")
     {
         if (_medalContainer != null && _medalLabel != null)
         {
             _isGameOverActive = true;
             _medalLabel.text = resultMessage;
+
+            if (_mathBreakdownLabel != null)
+            {
+                _mathBreakdownLabel.text = mathBreakdown;
+                _mathBreakdownLabel.style.display = string.IsNullOrEmpty(mathBreakdown) ? DisplayStyle.None : DisplayStyle.Flex;
+            }
+
             _medalContainer.style.display = DisplayStyle.Flex;
         }
     }
@@ -303,9 +360,13 @@ public class GameHUDController : MonoBehaviour
         // Zero out P1
         if (_p1DistanceLabel != null) _p1DistanceLabel.text = "0.00m";
         if (_p1TurnLabel != null) _p1TurnLabel.text = "0";
+        UpdateStatSlider(_p1MassSlider, _p1MassLabel, 1.0f);
+        UpdateStatSlider(_p1FrictionSlider, _p1FrictionLabel, 0.5f);
 
         // Zero out P2
         if (_p2DistanceLabel != null) _p2DistanceLabel.text = "0.00m";
         if (_p2TurnLabel != null) _p2TurnLabel.text = "0";
+        UpdateStatSlider(_p2MassSlider, _p2MassLabel, 1.0f);
+        UpdateStatSlider(_p2FrictionSlider, _p2FrictionLabel, 0.5f);
     }
 }

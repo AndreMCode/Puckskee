@@ -68,6 +68,8 @@ public class State_Evaluation : IGameState
         // Opponent tracker
         bool opponentFinished = (_context.CurrentPlayer == 1) ? _context.P2Finished : _context.P1Finished;
         int opponentID = (_context.CurrentPlayer == 1) ? 2 : 1;
+        int currentTurns = (_context.CurrentPlayer == 1) ? _context.P1TurnCount : _context.P2TurnCount;
+        int opponentTurns = (_context.CurrentPlayer == 1) ? _context.P2TurnCount : _context.P1TurnCount;
 
         if (opponentFinished)
         {
@@ -78,9 +80,6 @@ public class State_Evaluation : IGameState
         // Multi-player evaluation
         if (_context.CurrentDifficulty == GameStateManager.GameDifficulty.Easy_Turns)
         {
-            int currentTurns = (_context.CurrentPlayer == 1) ? _context.P1TurnCount : _context.P2TurnCount;
-            int opponentTurns = (_context.CurrentPlayer == 1) ? _context.P2TurnCount : _context.P1TurnCount;
-
             if (opponentTurns >= currentTurns)
             {
                 // Opponent turn count is already equal to or higher than the active player, game over
@@ -95,18 +94,20 @@ public class State_Evaluation : IGameState
         }
         else // Hard Mode
         {
-            float currentDistance = _activePuck.TotalDistance;
-            PuckMovementController opponentPuck = (_context.CurrentPlayer == 1) ? _context.PuckP2 : _context.PuckP1;
-            float opponentDistance = opponentPuck.TotalDistance;
+            int par = _context.CurrentLevelData.MaxTurns;
+            float currentFinalScore = CalculateEffectiveScore(_activePuck.TotalDistance, currentTurns, par);
 
-            if (opponentDistance > currentDistance)
+            PuckMovementController opponentPuck = (_context.CurrentPlayer == 1) ? _context.PuckP2 : _context.PuckP1;
+            float opponentCurrentScore = CalculateEffectiveScore(opponentPuck.TotalDistance, opponentTurns, par);
+
+            if (opponentCurrentScore > currentFinalScore)
             {
-                // Opponent has already exceeded the active player's distance, game over
+                // Opponent's current effective score is already worse than the active player's final score
                 TriggerGameOver();
             }
             else
             {
-                // Opponent still has a distance budget to win or tie, continue
+                // Opponent still has a score budget to win or tie, continue
                 _context.SetActivePlayer(opponentID);
                 _context.ChangeState(new State_TurnSetup(_context));
             }
@@ -119,13 +120,17 @@ public class State_Evaluation : IGameState
 
         // Opponent tracker
         int currentTurns = (_context.CurrentPlayer == 1) ? _context.P1TurnCount : _context.P2TurnCount;
+        int opponentTurns = (_context.CurrentPlayer == 1) ? _context.P2TurnCount : _context.P1TurnCount;
         int opponentID = (_context.CurrentPlayer == 1) ? 2 : 1;
+        int par = _context.CurrentLevelData.MaxTurns;
 
         // Single-player case
         if (!_context.IsMultiplayer)
         {
             bool easyModeGameOver = _context.CurrentDifficulty == GameStateManager.GameDifficulty.Easy_Turns && currentTurns >= _context.CurrentLevelData.MaxTurns;
-            bool hardModeGameOver = _context.CurrentDifficulty != GameStateManager.GameDifficulty.Easy_Turns && _activePuck.TotalDistance >= _context.CurrentLevelData.MaxDistance;
+
+            float currentScore = CalculateEffectiveScore(_activePuck.TotalDistance, currentTurns, par);
+            bool hardModeGameOver = _context.CurrentDifficulty != GameStateManager.GameDifficulty.Easy_Turns && currentScore >= _context.CurrentLevelData.MaxDistance;
 
             if (easyModeGameOver || hardModeGameOver)
             {
@@ -149,8 +154,6 @@ public class State_Evaluation : IGameState
             // ==========================================
             if (_context.CurrentDifficulty == GameStateManager.GameDifficulty.Easy_Turns)
             {
-                int opponentTurns = (_context.CurrentPlayer == 1) ? _context.P2TurnCount : _context.P1TurnCount;
-
                 if (currentTurns >= opponentTurns)
                 {
                     // The active player tied or lost, game over
@@ -165,9 +168,10 @@ public class State_Evaluation : IGameState
             else // Hard Mode
             {
                 PuckMovementController opponentPuck = (_context.CurrentPlayer == 1) ? _context.PuckP2 : _context.PuckP1;
-                float opponentFinalDistance = opponentPuck.TotalDistance;
+                float currentScore = CalculateEffectiveScore(_activePuck.TotalDistance, currentTurns, par);
+                float opponentFinalScore = CalculateEffectiveScore(opponentPuck.TotalDistance, opponentTurns, par);
 
-                if (_activePuck.TotalDistance > opponentFinalDistance)
+                if (currentScore > opponentFinalScore)
                 {
                     // The active player lost, game over
                     TriggerGameOver();
@@ -187,7 +191,9 @@ public class State_Evaluation : IGameState
             // ==========================================
 
             bool easyModeFinished = _context.CurrentDifficulty == GameStateManager.GameDifficulty.Easy_Turns && currentTurns >= _context.CurrentLevelData.MaxTurns;
-            bool hardModeFinished = _context.CurrentDifficulty != GameStateManager.GameDifficulty.Easy_Turns && _activePuck.TotalDistance >= _context.CurrentLevelData.MaxDistance;
+
+            float currentScore = CalculateEffectiveScore(_activePuck.TotalDistance, currentTurns, par);
+            bool hardModeFinished = _context.CurrentDifficulty != GameStateManager.GameDifficulty.Easy_Turns && currentScore >= _context.CurrentLevelData.MaxDistance;
 
             if (easyModeFinished || hardModeFinished)
             {
@@ -203,5 +209,14 @@ public class State_Evaluation : IGameState
     private void TriggerGameOver()
     {
         _context.ChangeState(new State_GameOver(_context));
+    }
+
+    // Par calculator
+    private float CalculateEffectiveScore(float distance, int turns, int par)
+    {
+        float currentTurnWeight = _context.CurrentLevelData.TurnWeight;
+
+        float effectiveScore = distance + ((turns - par) * currentTurnWeight);
+        return Mathf.Max(0f, effectiveScore);
     }
 }

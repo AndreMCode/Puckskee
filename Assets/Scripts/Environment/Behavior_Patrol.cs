@@ -19,11 +19,10 @@ public class Behavior_Patrol : MonoBehaviour
     private void Start()
     {
         // Convert the local Inspector offsets into absolute world coordinates 
-        // based on where the prefab was placed in the level.
         _worldPointA = transform.position + _localPointA;
         _worldPointB = transform.position + _localPointB;
 
-        // Ensure the object starts exactly at Point A
+        // Object starts at Point A
         transform.position = _worldPointA;
 
         StartCoroutine(PatrolRoutine());
@@ -33,26 +32,27 @@ public class Behavior_Patrol : MonoBehaviour
     {
         Vector3 target = _worldPointB;
         Vector3 start = _worldPointA;
+        WaitForSeconds waitTime = new WaitForSeconds(_waitTimeAtPoint);
 
         while (true)
         {
-            // 1. Move towards the current target
+            // Move towards the current target
             while (Vector3.Distance(transform.position, target) > 0.01f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, target, _patrolSpeed * Time.deltaTime);
                 yield return null; // Wait for the next frame
             }
 
-            // 2. Snap to exact position to prevent floating point drift
+            // Snap to exact position
             transform.position = target;
 
-            // 3. Wait if required
+            // Wait if set
             if (_waitTimeAtPoint > 0f)
             {
-                yield return new WaitForSeconds(_waitTimeAtPoint);
+                yield return waitTime;
             }
 
-            // 4. Swap targets for the ping-pong effect
+            // Swap targets for the ping-pong effect
             (start, target) = (target, start);
             // New format, formerly:
             // Vector3 temp = target;

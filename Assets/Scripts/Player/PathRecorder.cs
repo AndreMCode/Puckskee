@@ -6,7 +6,7 @@ public class PathRecorder : MonoBehaviour
 {
     [SerializeField] private float _minPointDistance = 0.1f;
 
-    private LineRenderer _ghostLine;
+    private LineRenderer _boostLine;
     private List<Vector3> _currentPath = new();
     private List<Vector3> _previousPath = new();
     private bool _isRecording = false;
@@ -15,8 +15,8 @@ public class PathRecorder : MonoBehaviour
 
     private void Awake()
     {
-        _ghostLine = GetComponent<LineRenderer>();
-        HideGhostPath();
+        _boostLine = GetComponent<LineRenderer>();
+        HideBoostPath();
     }
 
     public void StartRecording()
@@ -47,16 +47,16 @@ public class PathRecorder : MonoBehaviour
         }
     }
 
-    public void ShowGhostPath()
+    public void ShowBoostPath()
     {
-        if (_ghostLine == null || _previousPath.Count < 2) return;
-        _ghostLine.enabled = true;
-        _ghostLine.positionCount = _previousPath.Count;
-        _ghostLine.SetPositions(_previousPath.ToArray());
+        if (_boostLine == null || _previousPath.Count < 2) return;
+        _boostLine.enabled = true;
+        _boostLine.positionCount = _previousPath.Count;
+        _boostLine.SetPositions(_previousPath.ToArray());
     }
 
-    public void HideGhostPath()
+    public void HideBoostPath()
     {
-        if (_ghostLine != null) _ghostLine.enabled = false;
+        if (_boostLine != null) _boostLine.enabled = false;
     }
 }

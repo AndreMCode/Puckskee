@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/UI/MainMenu.uss?fileID=7433441132597879392&amp;guid=034fec7373e0d914e95024609d978b01&amp;type=3#MainMenu"/>
     <ui:VisualElement class="menu-root">
 
-        <!-- PERSISTENT TITLE -->
+        <!-- SEMI-PERSISTENT TITLE -->
         <ui:Label name="game-title" text="PUCKSKEE" class="title" />
 
         <!-- MAIN MENU -->
@@ -74,5 +74,5 @@
     </ui:VisualElement>
 
     <!-- PERSISTENT VERSION -->
-    <ui:Label name="game-version" text="v0.1.1" class="version-text" />
+    <ui:Label name="game-version" text="v0.1.2" class="version-text" />
 </ui:UXML>

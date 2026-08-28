@@ -6,7 +6,6 @@ public static class PuckPhysicsUtility
         Vector3 incomingVelocity,
         Vector3 obstacleVelocity,
         Vector3 surfaceNormal,
-        float bouncinessMultiplier,
         float spinOffsetAngle)
     {
         // Calculate relative velocity (for moving obstacles)
@@ -27,8 +26,7 @@ public static class PuckPhysicsUtility
         }
 
         // Calculate the exit speed
-        float exitSpeed = relativeIncomingVel.magnitude * bouncinessMultiplier;
-        Vector3 reflectedRelativeVel = reflectedDir * exitSpeed;
+        Vector3 reflectedRelativeVel = reflectedDir * relativeIncomingVel.magnitude;
 
         // Convert back to world space
         return reflectedRelativeVel + obstacleVelocity;

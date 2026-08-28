@@ -4,25 +4,71 @@
     <ui:VisualElement picking-mode="Ignore" class="hud-root">
 
         <ui:VisualElement name="p1-stats-container" class="stats-container p1-stats" picking-mode="Ignore">
+
             <ui:VisualElement class="stat-group">
-                <ui:Label text="P1 DISTANCE" class="label" />
-                <ui:Label name="p1-distance-value" text="0.00m" class="valueP1" />
+                <ui:Label text="PLAYER 1" class="P1label" />
             </ui:VisualElement>
+            
             <ui:VisualElement class="stat-group" style="margin-top: 10px;">
-                <ui:Label text="P1 TURNS" class="label" />
+                <ui:Label text="TURNS" class="label" />
                 <ui:Label name="p1-turns-value" text="0" class="valueP1" />
             </ui:VisualElement>
+
+            <ui:VisualElement class="stat-group" style="margin-top: 10px;">
+                <ui:Label text="MASS" class="label" />
+                <ui:VisualElement class="slider-wrapper">
+                    <ui:Slider name="p1-mass-slider" low-value="0.1" high-value="5.0" value="1.0" class="stat-slider" picking-mode="Ignore" />
+                    <ui:Label name="p1-mass-value" text="1.0" class="slider-value-label" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="stat-group" style="margin-top: 10px;">
+                <ui:Label text="FRICTION" class="label" />
+                <ui:VisualElement class="slider-wrapper">
+                    <ui:Slider name="p1-friction-slider" low-value="0.1" high-value="5.0" value="0.5" class="stat-slider" picking-mode="Ignore" />
+                    <ui:Label name="p1-friction-value" text="0.5" class="slider-value-label" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="stat-group" style="margin-top: 10px;">
+                <ui:Label text="DISTANCE" class="label" />
+                <ui:Label name="p1-distance-value" text="0.00m" class="valueP1" />
+            </ui:VisualElement>
+
         </ui:VisualElement>
 
         <ui:VisualElement name="p2-stats-container" class="stats-container p2-stats" picking-mode="Ignore">
+
             <ui:VisualElement class="stat-group">
-                <ui:Label text="P2 DISTANCE" class="label" />
-                <ui:Label name="p2-distance-value" text="0.00m" class="valueP2" />
+                <ui:Label text="PLAYER 2" class="P2label" />
             </ui:VisualElement>
+
             <ui:VisualElement class="stat-group" style="margin-top: 10px;">
-                <ui:Label text="P2 TURNS" class="label" />
+                <ui:Label text="TURNS" class="label" />
                 <ui:Label name="p2-turns-value" text="0" class="valueP2" />
             </ui:VisualElement>
+            
+            <ui:VisualElement class="stat-group" style="margin-top: 10px;">
+                <ui:Label text="MASS" class="label" />
+                <ui:VisualElement class="slider-wrapper">
+                    <ui:Slider name="p2-mass-slider" low-value="0.1" high-value="5.0" value="1.0" class="stat-slider" picking-mode="Ignore" />
+                    <ui:Label name="p2-mass-value" text="1.0" class="slider-value-label" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="stat-group" style="margin-top: 10px;">
+                <ui:Label text="FRICTION" class="label" />
+                <ui:VisualElement class="slider-wrapper">
+                    <ui:Slider name="p2-friction-slider" low-value="0.1" high-value="5.0" value="0.5" class="stat-slider" picking-mode="Ignore" />
+                    <ui:Label name="p2-friction-value" text="0.5" class="slider-value-label" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="stat-group" style="margin-top: 10px;">
+                <ui:Label text="DISTANCE" class="label" />
+                <ui:Label name="p2-distance-value" text="0.00m" class="valueP2" />
+            </ui:VisualElement>
+
         </ui:VisualElement>
 
         <ui:Label name="player-label" text="PLAYER 1" picking-mode="Ignore" class="player-banner" style="display: none;"/>
@@ -30,6 +76,7 @@
         <ui:VisualElement name="medal-container" class="medal-container" style="display: none;">
             <ui:Label name="medal-label" text="GOLD"/>
             <ui:Label text="CLEAR!" class="label" style="font-size: 32px;"/>
+            <ui:Label name="math-breakdown-label" class="math-breakdown" />
         </ui:VisualElement>
 
         <ui:VisualElement name="offset-slider-container" class="offset-slider-container" style="display: none;">

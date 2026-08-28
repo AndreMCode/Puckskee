@@ -23,4 +23,7 @@ public class LevelConfig : ScriptableObject
     public float BronzeDistance = 1000f;
     [Tooltip("If the player exceeds this distance, they automatically lose.")]
     public float MaxDistance = 2000f;
+
+    [Tooltip("Distance penalty applied per turn taken over the level's MaxTurns par.")]
+    public float TurnWeight = 15f;
 }

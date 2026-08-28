@@ -5,10 +5,31 @@
 .stats-container {
     position: absolute;
     top: 20px;
+    width: 180px;
     background-color: rgba(9, 0, 0, 0.85);
     padding: 15px;
     border-radius: 5px;
     border-width: 2px;
+}
+
+.P1label {
+    color: white;
+    font-size: 20px;
+    align-self: center;
+    -unity-font-style: bold;
+    border-bottom-width: 2px;
+    border-color: #FF0000;
+    padding-bottom: 8px;
+}
+
+.P2label {
+    color: white;
+    font-size: 20px;
+    align-self: center;
+    -unity-font-style: bold;
+    border-bottom-width: 2px;
+    border-color: #FF0000;
+    padding-bottom: 8px;
 }
 
 .p1-stats {
@@ -18,7 +39,7 @@
 
 .p2-stats {
     right: 20px;
-    border-color: #FF0000;
+    border-color: #FF8000;
 }
 
 .stat-group {
@@ -28,17 +49,42 @@
 .label {
     color: white;
     font-size: 16px;
+    align-self: center;
     -unity-font-style: bold;
 }
 
 .valueP1 {
     color: #FF8000;
     font-size: 24px;
+    align-self: center;
 }
 
 .valueP2 {
     color: #FF8000;
     font-size: 24px;
+    align-self: center;
+}
+
+.slider-wrapper {
+    margin-top: 5px;
+    height: 40px;
+    position: relative;
+    justify-content: flex-start;
+}
+
+.stat-slider {
+    margin: 0;
+    flex-grow: 1;
+}
+
+.slider-value-label {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    translate: -50% 0;
+    color: #FF8000;
+    font-size: 16px;
+    -unity-font-style: bold;
 }
 
 .player-banner {
@@ -73,6 +119,13 @@
     color: #FF8000;
     font-size: 48px;
     -unity-font-style: bold;
+}
+
+.math-breakdown {
+    color: white;
+    font-size: 18px;
+    -unity-font-style: italic;
+    margin-top: 10px;
 }
 
 .offset-slider-container {

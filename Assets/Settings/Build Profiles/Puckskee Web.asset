@@ -26,6 +26,9 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/Scenes/Stage_1.unity
     m_guid: ebef5b53ae9024543b1ceee5c7966603
+  - m_enabled: 1
+    m_path: Assets/Scenes/Stage_2.unity
+    m_guid: 9b9a51bd7ca6dfa489af8632ea509a75
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
@@ -73,8 +76,8 @@ MonoBehaviour:
     - line: '|   m_VirtualRealitySplashScreen: {instanceID: 0}'
     - line: '|   defaultScreenWidth: 1024'
     - line: '|   defaultScreenHeight: 768'
-    - line: '|   defaultScreenWidthWeb: 1920'
-    - line: '|   defaultScreenHeightWeb: 1080'
+    - line: '|   defaultScreenWidthWeb: 960'
+    - line: '|   defaultScreenHeightWeb: 540'
     - line: '|   m_StereoRenderingPath: 0'
     - line: '|   m_ActiveColorSpace: 1'
     - line: '|   unsupportedMSAAFallback: 0'
@@ -173,7 +176,7 @@ MonoBehaviour:
     - line: '|   loadStoreDebugModeEnabled: 0'
     - line: '|   visionOSBundleVersion: 1.0'
     - line: '|   tvOSBundleVersion: 1.0'
-    - line: '|   bundleVersion: 0.1.1'
+    - line: '|   bundleVersion: 0.1.2'
     - line: '|   preloadedAssets: []'
     - line: '|   metroInputSource: 0'
     - line: '|   wsaTransparentSwapchain: 0'
@@ -842,7 +845,7 @@ MonoBehaviour:
     - line: '|   webGLDebugSymbols: 0'
     - line: '|   webGLEmscriptenArgs: '
     - line: '|   webGLModulesDirectory: '
-    - line: '|   webGLTemplate: APPLICATION:Default'
+    - line: '|   webGLTemplate: PROJECT:FlexBuild'
     - line: '|   webGLAnalyzeBuildSize: 0'
     - line: '|   webGLUseEmbeddedResources: 0'
     - line: '|   webGLCompressionFormat: 0'

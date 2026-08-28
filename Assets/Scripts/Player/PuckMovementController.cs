@@ -16,6 +16,10 @@ public class PuckMovementController : MonoBehaviour
     [Header("Distance Tracking Options")]
     public bool TrackInactiveDistance = false;
 
+    [Header("Trajectory Math")]
+    [Tooltip("Must match the dynamic friction of the floor's Physics Material.")]
+    [SerializeField] private float _floorFriction = 0.6f;
+
     private PathRecorder _pathRecorder;
     private int _currentSegmentsRecorded = 0;
     private List<Vector3> _opponentPathToCheck;
@@ -71,8 +75,6 @@ public class PuckMovementController : MonoBehaviour
 
     private void Update()
     {
-        if (this == null) return;
-
         // Auto-Wake: If this puck is resting but suddenly gets smacked
         if (!_isMoving && _rb.linearVelocity.magnitude > _stopThreshold)
         {
@@ -105,15 +107,16 @@ public class PuckMovementController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (_pathRecorder != null)
-        {
-            _pathRecorder.StopRecording();
-            MarkSegmentEnd();
-        }
-
         // If we hit another puck, let Unity's physics handle the bounce
         if (collision.gameObject.TryGetComponent<PuckMovementController>(out var otherPuck))
         {
+            // Stop path recording on Puck collision
+            if (_pathRecorder != null)
+            {
+                _pathRecorder.StopRecording();
+                MarkSegmentEnd();
+            }
+
             _pendingSpinOffset = 0f; // Clear spin so it doesn't apply to the next wall
 
             if (_impactVFX != null && collision.contactCount > 0)
@@ -133,7 +136,6 @@ public class PuckMovementController : MonoBehaviour
         }
         averageNormal = averageNormal.normalized;
 
-        float multiplier = 1.0f;
         Vector3 obstacleVelocity = Vector3.zero;
 
         if (collision.rigidbody != null)
@@ -146,7 +148,6 @@ public class PuckMovementController : MonoBehaviour
             _lastVelocity,
             obstacleVelocity,
             averageNormal,
-            multiplier,
             _pendingSpinOffset
         );
 
@@ -276,12 +277,12 @@ public class PuckMovementController : MonoBehaviour
 
     public void ShowPath()
     {
-        if (_pathRecorder != null) _pathRecorder.ShowGhostPath();
+        if (_pathRecorder != null) _pathRecorder.ShowBoostPath();
     }
 
     public void HidePath()
     {
-        if (_pathRecorder != null) _pathRecorder.HideGhostPath();
+        if (_pathRecorder != null) _pathRecorder.HideBoostPath();
     }
 
     // ==========================================
@@ -313,7 +314,7 @@ public class PuckMovementController : MonoBehaviour
         // Hide the opponent's boost line
         if (_opponentPathRecorder != null)
         {
-            _opponentPathRecorder.HideGhostPath();
+            _opponentPathRecorder.HideBoostPath();
             _opponentPathRecorder = null;
         }
 
@@ -331,6 +332,32 @@ public class PuckMovementController : MonoBehaviour
     }
 
     // ==========================================
+    // TRAJECTORY MATH
+    // ==========================================
+
+    public float GetMaxTravelDistance(float maxLaunchForce)
+    {
+        float mass = _rb.mass;
+        float damping = Mathf.Max(_rb.linearDamping, 0.0001f);
+
+        // V0: Initial Velocity
+        float v0 = maxLaunchForce / mass;
+
+        // Af: Constant deceleration from floor friction (mu * g)
+        float gravity = Mathf.Abs(Physics.gravity.y);
+        float af = _floorFriction * gravity;
+
+        // Apply the integral formula:
+        // D = (V0 / c) - (Af / c^2) * ln(1 + (V0 * c) / Af)
+
+        float term1 = v0 / damping;
+        float term2 = af / (damping * damping);
+        float logTerm = Mathf.Log(1f + ((v0 * damping) / af));
+
+        return term1 - (term2 * logTerm);
+    }
+
+    // ==========================================
     // MODIFIER API
     // ==========================================
 
@@ -338,12 +365,14 @@ public class PuckMovementController : MonoBehaviour
     {
         float newMass = Mathf.Clamp(_rb.mass + amount, minMass, maxMass);
         _rb.mass = newMass;
+        GameEvents.OnMassUpdated?.Invoke(PlayerID, _rb.mass);
         Debug.Log($"[Puck] Mass adjusted by {amount}. New Mass: {_rb.mass:F2}");
     }
 
     public void SetMass(float exactMass)
     {
         _rb.mass = exactMass;
+        GameEvents.OnMassUpdated?.Invoke(PlayerID, _rb.mass);
         Debug.Log($"[Puck] Mass restored to: {_rb.mass:F2}");
     }
 
@@ -357,12 +386,14 @@ public class PuckMovementController : MonoBehaviour
     {
         float newDamp = Mathf.Clamp(_rb.linearDamping + amount, minDamp, maxDamp);
         _rb.linearDamping = newDamp;
+        GameEvents.OnFrictionUpdated?.Invoke(PlayerID, _rb.linearDamping);
         Debug.Log($"[Puck] Damping adjusted by {amount}. New Damping: {_rb.linearDamping:F2}");
     }
 
     public void SetDamping(float exactDamp)
     {
         _rb.linearDamping = exactDamp;
+        GameEvents.OnFrictionUpdated?.Invoke(PlayerID, _rb.linearDamping);
         Debug.Log($"[Puck] Damping restored to: {_rb.linearDamping:F2}");
     }
 
@@ -399,6 +430,10 @@ public class PuckMovementController : MonoBehaviour
 
         // Also initialize the travel direction when spawned
         _lastValidDirection = spawnAnchor.forward;
+
+        // Update HUD
+        GameEvents.OnMassUpdated?.Invoke(PlayerID, _rb.mass);
+        GameEvents.OnFrictionUpdated?.Invoke(PlayerID, _rb.linearDamping);
     }
 
     public void SetGhost(bool isGhost)

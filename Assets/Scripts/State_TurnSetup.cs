@@ -4,9 +4,6 @@ public class State_TurnSetup : IGameState
 {
     private GameStateManager _context;
 
-    // The distance threshold to determine if the inactive puck is blocking the active one
-    private readonly float _ghostThresholdDistance = 0.5f;
-
     public State_TurnSetup(GameStateManager context)
     {
         _context = context;
@@ -33,7 +30,7 @@ public class State_TurnSetup : IGameState
         }
 
         // ==========================================
-        // MULTIPLAYER GHOST PATH VISUALS
+        // MULTIPLAYER BOOST PATH VISUALS
         // ==========================================
 
         if (_context.IsMultiplayer)
@@ -69,6 +66,8 @@ public class State_TurnSetup : IGameState
 
         if (inactivePuck != null && activePuck != null)
         {
+            activePuck.SetGhost(false);
+
             // Determine if the inactive puck has already scored and finished the game
             bool isInactivePuckScored = (_context.CurrentPlayer == 1) ? _context.P2Finished : _context.P1Finished;
 
@@ -81,9 +80,10 @@ public class State_TurnSetup : IGameState
             {
                 // If the inactive puck is sitting exactly where the active puck needs to shoot from,
                 // we turn the inactive puck into a trigger (ghost) so they don't immediately collide.
+                float collisionDistance = activePuck.Radius + inactivePuck.Radius;
                 float distance = Vector3.Distance(activePuck.transform.position, inactivePuck.transform.position);
 
-                if (distance <= _ghostThresholdDistance)
+                if (distance <= collisionDistance)
                 {
                     inactivePuck.SetGhost(true);
                     Debug.Log($"[State] Player {_context.CurrentPlayer}'s path is blocked. Proximity ghosting active!");
