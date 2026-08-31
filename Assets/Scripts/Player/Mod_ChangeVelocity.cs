@@ -10,6 +10,6 @@ public class Mod_ChangeVelocity : MonoBehaviour, IPuckModifier
 
     public void ApplyModifier(PuckMovementController puck)
     {
-        puck.MultiplyVelocity(_velocityMultiplier);
+        puck.Motor.MultiplyVelocity(_velocityMultiplier);
     }
 }

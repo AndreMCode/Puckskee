@@ -86,8 +86,8 @@ public class State_GameOver : IGameState
             }
             else // Hard Mode (lowest effective score)
             {
-                float p1Distance = _context.P1Finished ? _context.P1FinalDistance : _context.PuckP1.TotalDistance;
-                float p2Distance = _context.P2Finished ? _context.P2FinalDistance : _context.PuckP2.TotalDistance;
+                float p1Distance = _context.P1Finished ? _context.P1FinalDistance : _context.PuckP1.MatchData.TotalDistance;
+                float p2Distance = _context.P2Finished ? _context.P2FinalDistance : _context.PuckP2.MatchData.TotalDistance;
 
                 float p1Score = CalculateEffectiveScore(p1Distance, _context.P1TurnCount, par, out string p1Breakdown);
                 float p2Score = CalculateEffectiveScore(p2Distance, _context.P2TurnCount, par, out string p2Breakdown);

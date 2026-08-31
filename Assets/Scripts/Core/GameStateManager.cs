@@ -23,8 +23,10 @@ public class GameStateManager : MonoBehaviour
     [Tooltip("LevelConfig ScriptableObject for this specific map.")]
     public LevelConfig CurrentLevelData;
 
-    // For testing, later set by MainMenu
+    // Normally set by MainMenu, 
     [Header("Game Mode Settings")]
+    [Tooltip("Overrides the game mode set by MainMenu")]
+    public bool OverrideMenuGameSettings = false;
     public GameDifficulty CurrentDifficulty = GameDifficulty.Easy_Turns;
     public bool IsMultiplayer = true;
     // ---- ---- ---- ----
@@ -63,11 +65,12 @@ public class GameStateManager : MonoBehaviour
 
     private void Awake()
     {
-        ResetMatchData();
-
-        // Load settings set by MainMenu
-        CurrentDifficulty = MatchSettings.Difficulty;
-        IsMultiplayer = MatchSettings.IsMultiplayer;
+        if (!OverrideMenuGameSettings)
+        {
+            // Load settings set by MainMenu
+            CurrentDifficulty = MatchSettings.Difficulty;
+            IsMultiplayer = MatchSettings.IsMultiplayer;
+        }
 
         // Clean up the board based on game mode
         if (IsMultiplayer)
@@ -114,8 +117,8 @@ public class GameStateManager : MonoBehaviour
         CurrentPlayer = playerID;
 
         // Synchronize the pucks' active state with the current turn
-        if (PuckP1 != null) PuckP1.IsActivePuck = (CurrentPlayer == 1);
-        if (PuckP2 != null) PuckP2.IsActivePuck = (CurrentPlayer == 2);
+        if (PuckP1 != null) PuckP1.MatchData.IsActivePuck = (CurrentPlayer == 1);
+        if (PuckP2 != null) PuckP2.MatchData.IsActivePuck = (CurrentPlayer == 2);
 
         GameEvents.OnPlayerSwapped?.Invoke(CurrentPlayer);
     }
@@ -185,17 +188,17 @@ public class GameStateManager : MonoBehaviour
         // Assign IDs and set P1 as the default active puck
         if (PuckP1 != null)
         {
-            PuckP1.PlayerID = 1;
-            PuckP1.IsActivePuck = true;
-            PuckP1.ResetDistance();
+            PuckP1.MatchData.PlayerID = 1;
+            PuckP1.MatchData.IsActivePuck = true;
+            PuckP1.MatchData.ResetDistance();
             PuckP1.transform.position = bullpenPosition;
         }
 
         if (PuckP2 != null)
         {
-            PuckP2.PlayerID = 2;
-            PuckP2.IsActivePuck = false;
-            PuckP2.ResetDistance();
+            PuckP2.MatchData.PlayerID = 2;
+            PuckP2.MatchData.IsActivePuck = false;
+            PuckP2.MatchData.ResetDistance();
             PuckP2.transform.position = bullpenPosition;
         }
 

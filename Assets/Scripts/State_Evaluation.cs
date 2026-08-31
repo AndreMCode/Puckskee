@@ -15,11 +15,11 @@ public class State_Evaluation : IGameState
 
         if (_context.CurrentPlayer == 1)
         {
-            _context.P1AimDirection = _activePuck.GetLastTravelDirection();
+            _context.P1AimDirection = _activePuck.Motor.GetLastTravelDirection();
         }
         else
         {
-            _context.P2AimDirection = _activePuck.GetLastTravelDirection();
+            _context.P2AimDirection = _activePuck.Motor.GetLastTravelDirection();
         }
 
         // Check if the puck is physically inside the Goal Zone
@@ -47,14 +47,14 @@ public class State_Evaluation : IGameState
         GameEvents.OnGoalScored?.Invoke();
 
         // Mark this player as finished and save their score
-        _context.MarkPlayerFinished(_context.CurrentPlayer, _activePuck.TotalDistance);
+        _context.MarkPlayerFinished(_context.CurrentPlayer, _activePuck.MatchData.TotalDistance);
         Debug.Log($"[Evaluation] Player {_context.CurrentPlayer} SCORED!");
 
         // Single-player evaluation
         if (!_context.IsMultiplayer)
         {
             int finalTurns = _context.P1TurnCount;
-            float finalDistance = _activePuck.TotalDistance;
+            float finalDistance = _activePuck.MatchData.TotalDistance;
 
             SaveManager.UpdateRecord(_context.CurrentLevelData.StageNumber, finalTurns, finalDistance);
 
@@ -95,10 +95,10 @@ public class State_Evaluation : IGameState
         else // Hard Mode
         {
             int par = _context.CurrentLevelData.MaxTurns;
-            float currentFinalScore = CalculateEffectiveScore(_activePuck.TotalDistance, currentTurns, par);
+            float currentFinalScore = CalculateEffectiveScore(_activePuck.MatchData.TotalDistance, currentTurns, par);
 
             PuckMovementController opponentPuck = (_context.CurrentPlayer == 1) ? _context.PuckP2 : _context.PuckP1;
-            float opponentCurrentScore = CalculateEffectiveScore(opponentPuck.TotalDistance, opponentTurns, par);
+            float opponentCurrentScore = CalculateEffectiveScore(opponentPuck.MatchData.TotalDistance, opponentTurns, par);
 
             if (opponentCurrentScore > currentFinalScore)
             {
@@ -129,7 +129,7 @@ public class State_Evaluation : IGameState
         {
             bool easyModeGameOver = _context.CurrentDifficulty == GameStateManager.GameDifficulty.Easy_Turns && currentTurns >= _context.CurrentLevelData.MaxTurns;
 
-            float currentScore = CalculateEffectiveScore(_activePuck.TotalDistance, currentTurns, par);
+            float currentScore = CalculateEffectiveScore(_activePuck.MatchData.TotalDistance, currentTurns, par);
             bool hardModeGameOver = _context.CurrentDifficulty != GameStateManager.GameDifficulty.Easy_Turns && currentScore >= _context.CurrentLevelData.MaxDistance;
 
             if (easyModeGameOver || hardModeGameOver)
@@ -168,8 +168,8 @@ public class State_Evaluation : IGameState
             else // Hard Mode
             {
                 PuckMovementController opponentPuck = (_context.CurrentPlayer == 1) ? _context.PuckP2 : _context.PuckP1;
-                float currentScore = CalculateEffectiveScore(_activePuck.TotalDistance, currentTurns, par);
-                float opponentFinalScore = CalculateEffectiveScore(opponentPuck.TotalDistance, opponentTurns, par);
+                float currentScore = CalculateEffectiveScore(_activePuck.MatchData.TotalDistance, currentTurns, par);
+                float opponentFinalScore = CalculateEffectiveScore(opponentPuck.MatchData.TotalDistance, opponentTurns, par);
 
                 if (currentScore > opponentFinalScore)
                 {
@@ -192,12 +192,12 @@ public class State_Evaluation : IGameState
 
             bool easyModeFinished = _context.CurrentDifficulty == GameStateManager.GameDifficulty.Easy_Turns && currentTurns >= _context.CurrentLevelData.MaxTurns;
 
-            float currentScore = CalculateEffectiveScore(_activePuck.TotalDistance, currentTurns, par);
+            float currentScore = CalculateEffectiveScore(_activePuck.MatchData.TotalDistance, currentTurns, par);
             bool hardModeFinished = _context.CurrentDifficulty != GameStateManager.GameDifficulty.Easy_Turns && currentScore >= _context.CurrentLevelData.MaxDistance;
 
             if (easyModeFinished || hardModeFinished)
             {
-                _context.MarkPlayerFinished(_context.CurrentPlayer, _activePuck.TotalDistance);
+                _context.MarkPlayerFinished(_context.CurrentPlayer, _activePuck.MatchData.TotalDistance);
             }
 
             // Swap players

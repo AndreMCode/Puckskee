@@ -26,7 +26,7 @@ public class State_TurnSetup : IGameState
         if (activePuck != null)
         {
             // Display current player's distance
-            GameEvents.OnDistanceUpdated?.Invoke(activePuck.PlayerID, activePuck.TotalDistance);
+            GameEvents.OnDistanceUpdated?.Invoke(activePuck.MatchData.PlayerID, activePuck.MatchData.TotalDistance);
         }
 
         // ==========================================
@@ -38,11 +38,14 @@ public class State_TurnSetup : IGameState
             // Only show the opponent's path if we are past Turn 1
             if (_context.CurrentTurn > 1 && inactivePuck != null)
             {
-                inactivePuck.ShowPath();
+                inactivePuck.PathManager.ShowPath();
             }
 
             // Always hide the active player's old path
-            if (activePuck != null) activePuck.HidePath();
+            if (activePuck != null)
+            {
+                activePuck.PathManager.HidePath();
+            }
         }
 
         // ==========================================
@@ -80,7 +83,7 @@ public class State_TurnSetup : IGameState
             {
                 // If the inactive puck is sitting exactly where the active puck needs to shoot from,
                 // we turn the inactive puck into a trigger (ghost) so they don't immediately collide.
-                float collisionDistance = activePuck.Radius + inactivePuck.Radius;
+                float collisionDistance = activePuck.Motor.Radius + inactivePuck.Motor.Radius;
                 float distance = Vector3.Distance(activePuck.transform.position, inactivePuck.transform.position);
 
                 if (distance <= collisionDistance)

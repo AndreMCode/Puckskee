@@ -9,6 +9,7 @@ public class Mod_RestoreMass : MonoBehaviour, IPuckModifier
 
     public void ApplyModifier(PuckMovementController puck)
     {
-        puck.SetMass(_defaultMass);
+        puck.Motor.SetMass(_defaultMass);
+        GameEvents.OnMassUpdated?.Invoke(puck.MatchData.PlayerID, puck.Motor.CurrentMass);
     }
 }

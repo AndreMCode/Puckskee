@@ -12,6 +12,7 @@ public class Mod_ChangeMass : MonoBehaviour, IPuckModifier
 
     public void ApplyModifier(PuckMovementController puck)
     {
-        puck.AdjustMass(_massChange, _minimumMass, _maximumMass);
+        puck.Motor.AdjustMass(_massChange, _minimumMass, _maximumMass);
+        GameEvents.OnMassUpdated?.Invoke(puck.MatchData.PlayerID, puck.Motor.CurrentMass);
     }
 }

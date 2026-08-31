@@ -17,16 +17,16 @@
             <ui:VisualElement class="stat-group" style="margin-top: 10px;">
                 <ui:Label text="MASS" class="label" />
                 <ui:VisualElement class="slider-wrapper">
-                    <ui:Slider name="p1-mass-slider" low-value="0.1" high-value="5.0" value="1.0" class="stat-slider" picking-mode="Ignore" />
-                    <ui:Label name="p1-mass-value" text="1.0" class="slider-value-label" />
+                    <ui:Slider name="p1-mass-slider" low-value="1.0" high-value="2.0" value="1.8" class="stat-slider" picking-mode="Ignore" />
+                    <ui:Label name="p1-mass-value" text="1.8" class="slider-value-label" style="color: #FF0000" />
                 </ui:VisualElement>
             </ui:VisualElement>
 
             <ui:VisualElement class="stat-group" style="margin-top: 10px;">
                 <ui:Label text="FRICTION" class="label" />
                 <ui:VisualElement class="slider-wrapper">
-                    <ui:Slider name="p1-friction-slider" low-value="0.1" high-value="5.0" value="0.5" class="stat-slider" picking-mode="Ignore" />
-                    <ui:Label name="p1-friction-value" text="0.5" class="slider-value-label" />
+                    <ui:Slider name="p1-friction-slider" low-value="1.0" high-value="2.0" value="1.8" class="stat-slider" picking-mode="Ignore" />
+                    <ui:Label name="p1-friction-value" text="1.8" class="slider-value-label" style="color: #FF0000" />
                 </ui:VisualElement>
             </ui:VisualElement>
 
@@ -51,16 +51,16 @@
             <ui:VisualElement class="stat-group" style="margin-top: 10px;">
                 <ui:Label text="MASS" class="label" />
                 <ui:VisualElement class="slider-wrapper">
-                    <ui:Slider name="p2-mass-slider" low-value="0.1" high-value="5.0" value="1.0" class="stat-slider" picking-mode="Ignore" />
-                    <ui:Label name="p2-mass-value" text="1.0" class="slider-value-label" />
+                    <ui:Slider name="p2-mass-slider" low-value="1.0" high-value="2.0" value="1.8" class="stat-slider" picking-mode="Ignore" />
+                    <ui:Label name="p2-mass-value" text="1.8" class="slider-value-label" style="color: #FF8000" />
                 </ui:VisualElement>
             </ui:VisualElement>
 
             <ui:VisualElement class="stat-group" style="margin-top: 10px;">
                 <ui:Label text="FRICTION" class="label" />
                 <ui:VisualElement class="slider-wrapper">
-                    <ui:Slider name="p2-friction-slider" low-value="0.1" high-value="5.0" value="0.5" class="stat-slider" picking-mode="Ignore" />
-                    <ui:Label name="p2-friction-value" text="0.5" class="slider-value-label" />
+                    <ui:Slider name="p2-friction-slider" low-value="1.0" high-value="2.0" value="1.8" class="stat-slider" picking-mode="Ignore" />
+                    <ui:Label name="p2-friction-value" text="1.8" class="slider-value-label" style="color: #FF8000" />
                 </ui:VisualElement>
             </ui:VisualElement>
 

@@ -18,6 +18,10 @@ public class PauseMenuController : MonoBehaviour
     private Slider _sliderSensZoom;
     private Slider _sliderSensSpin;
 
+    // Timescale values
+    private float _prePauseTimeScale = 1f;
+    private float _prePauseFixedDeltaTime = 0.02f;
+
     private bool _isPaused = false;
 
     private void Awake()
@@ -69,6 +73,11 @@ public class PauseMenuController : MonoBehaviour
     private void OnDisable()
     {
         InputReader.OnPause -= TogglePause;
+
+        if (_uiDocument != null && _uiDocument.rootVisualElement != null)
+        {
+            _uiDocument.rootVisualElement.UnregisterCallback<NavigationMoveEvent>(HandleDpadNavigation);
+        }
     }
 
     private void TogglePause()
@@ -83,6 +92,10 @@ public class PauseMenuController : MonoBehaviour
         InputReader.IsInputBlocked = true; // Lock the state machine out from input
 
         GameEvents.OnPauseToggled?.Invoke(true); // Tell the HUD to hide its popups
+
+        // Capture the exact time scales before freezing
+        _prePauseTimeScale = Time.timeScale;
+        _prePauseFixedDeltaTime = Time.fixedDeltaTime;
 
         // Halt the game physics and update loops
         Time.timeScale = 0f;
@@ -177,8 +190,9 @@ public class PauseMenuController : MonoBehaviour
 
         _isPaused = false;
 
-        // Resume physics
-        Time.timeScale = 1f;
+        // Restore the captured time scales
+        Time.timeScale = _prePauseTimeScale;
+        Time.fixedDeltaTime = _prePauseFixedDeltaTime;
 
         InputReader.IsInputBlocked = false; // Re-enable gameplay inputs
 

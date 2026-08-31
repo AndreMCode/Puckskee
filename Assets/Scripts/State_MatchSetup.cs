@@ -32,12 +32,14 @@ public class State_MatchSetup : IGameState
             if (_context.PuckP1 != null)
             {
                 _context.PuckP1.SetGhost(false);
-                _context.PuckP1.HidePath();
+                _context.PuckP1.PathManager.HidePath();
+                _context.PuckP1.PathManager.SetMaxLaunchForce(_context.MaxLaunchForce);
             }
             if (_context.PuckP2 != null)
             {
                 _context.PuckP2.SetGhost(false);
-                _context.PuckP2.HidePath();
+                _context.PuckP2.PathManager.HidePath();
+                _context.PuckP2.PathManager.SetMaxLaunchForce(_context.MaxLaunchForce);
             }
         }
 
@@ -46,6 +48,7 @@ public class State_MatchSetup : IGameState
         {
             _context.GameHUD.ResetForNewMatch();
             _context.GameHUD.SetupMatchUI(_context.IsMultiplayer);
+            _context.PuckP1.PathManager.SetMaxLaunchForce(_context.MaxLaunchForce);
         }
 
         _timer = 0f;

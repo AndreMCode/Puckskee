@@ -10,6 +10,7 @@ public class Mod_ChangeDistance : MonoBehaviour, IPuckModifier
 
     public void ApplyModifier(PuckMovementController puck)
     {
-        puck.AdjustDistance(_distanceChange);
+        puck.MatchData.AdjustDistance(_distanceChange);
+        GameEvents.OnDistanceUpdated?.Invoke(puck.MatchData.PlayerID, puck.MatchData.TotalDistance);
     }
 }

@@ -22,17 +22,18 @@ public class State_Action : IGameState
             if (_context.CurrentTurn > 1)
             {
                 // Give the active puck the opponent's last recorded path to check against
-                if (inactivePuck != null)
+                if (inactivePuck != null && _activePuck.PathManager != null)
                 {
                     if (inactivePuck.TryGetComponent<PathRecorder>(out var opponentRecorder))
                     {
-                        // Pass the component so the puck can turn it off mid-shot
-                        _activePuck.SetupBoostCheck(opponentRecorder);
+                        _activePuck.PathManager.SetupBoostCheck(opponentRecorder);
                     }
                 }
 
-                // Start recording the active puck's new path
-                _activePuck.StartPathRecording();
+                if (_activePuck.PathManager != null)
+                {
+                    _activePuck.PathManager.StartPathRecording();
+                }
             }
         }
 
@@ -40,7 +41,7 @@ public class State_Action : IGameState
         Vector3 launchForce = _context.CurrentLaunchDirection * _context.CalculatedLaunchForce;
 
         // Launch
-        _activePuck.Launch(launchForce, _context.CurrentSpinOffset);
+        _activePuck.Motor.Launch(launchForce, _context.CurrentSpinOffset);
 
         // Assign target for camera
         if (_context.CameraDirector != null)
@@ -93,8 +94,8 @@ public class State_Action : IGameState
         // Verify the entire board has settled
         if (_context.IsMultiplayer)
         {
-            if (_context.PuckP1 != null && _context.PuckP1.IsMoving) return;
-            if (_context.PuckP2 != null && _context.PuckP2.IsMoving) return;
+            if (_context.PuckP1 != null && _context.PuckP1.Motor.IsMoving) return;
+            if (_context.PuckP2 != null && _context.PuckP2.Motor.IsMoving) return;
         }
 
         Debug.Log("[State] All active pucks have come to a complete stop.");
@@ -102,7 +103,11 @@ public class State_Action : IGameState
         // Stop path recording
         if (_context.IsMultiplayer)
         {
-            _activePuck.StopPathRecording();
+            PuckPathManager activePath = _activePuck.GetComponent<PuckPathManager>();
+            if (activePath != null)
+            {
+                activePath.StopPathRecording();
+            }
         }
 
         _context.ChangeState(new State_Evaluation(_context));

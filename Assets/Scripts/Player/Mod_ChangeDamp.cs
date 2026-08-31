@@ -12,6 +12,7 @@ public class Mod_ChangeDamp : MonoBehaviour, IPuckModifier
 
     public void ApplyModifier(PuckMovementController puck)
     {
-        puck.AdjustDamping(_dampingChange, _minimumDamping, _maximumDamping);
+        puck.Motor.AdjustDamping(_dampingChange, _minimumDamping, _maximumDamping);
+        GameEvents.OnFrictionUpdated?.Invoke(puck.MatchData.PlayerID, puck.Motor.CurrentDamping);
     }
 }

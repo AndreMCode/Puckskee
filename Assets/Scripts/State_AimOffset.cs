@@ -21,11 +21,11 @@ public class State_AimOffset : IGameState
         // Calculate exactly where the puck is currently aiming to hit
         Vector3 startPos = _activePuck.transform.position;
         Vector3 direction = _context.CurrentLaunchDirection;
-        float maxDist = _activePuck.GetMaxTravelDistance(_context.MaxLaunchForce);
+        float maxDist = _activePuck.Motor.GetMaxTravelDistance(_context.MaxLaunchForce);
 
         // Fetch collision point and the surface normal, or open space endpoint
-        Vector3 collisionPoint = _context.TrajectoryManager.GetFirstHitPoint(startPos, direction, _activePuck.Radius, maxDist);
-        _hitNormal = _context.TrajectoryManager.GetFirstHitNormal(startPos, direction, _activePuck.Radius, maxDist);
+        Vector3 collisionPoint = _context.TrajectoryManager.GetFirstHitPoint(startPos, direction, _activePuck.Motor.Radius, maxDist);
+        _hitNormal = _context.TrajectoryManager.GetFirstHitNormal(startPos, direction, _activePuck.Motor.Radius, maxDist);
 
         // Instruct the Camera Director to sweep to the collision point
         if (_context.CameraDirector != null)
@@ -46,13 +46,13 @@ public class State_AimOffset : IGameState
         // Always update trajectory line
         if (_context.TrajectoryManager != null)
         {
-            float maxDist = _activePuck.GetMaxTravelDistance(_context.MaxLaunchForce);
+            float maxDist = _activePuck.Motor.GetMaxTravelDistance(_context.MaxLaunchForce);
 
             _context.TrajectoryManager.ShowTrajectory(
                 _activePuck.transform.position,
                 _context.CurrentLaunchDirection,
                 _currentSpinOffset,
-                _activePuck.Radius,
+                _activePuck.Motor.Radius,
                 maxDist
             );
         }

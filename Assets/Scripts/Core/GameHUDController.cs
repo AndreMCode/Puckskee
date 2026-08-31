@@ -51,6 +51,11 @@ public class GameHUDController : MonoBehaviour
     private Label _mathBreakdownLabel;
     private bool _isGameOverActive = false;
 
+    // Throttling distance allocations
+    private float _lastP1Distance = -1f;
+    private float _lastP2Distance = -1f;
+    private readonly float _distanceUpdateThreshold = 0.05f; // Only update if distance changes by 5cm
+
     private void Awake()
     {
         _uiDocument = GetComponent<UIDocument>();
@@ -155,7 +160,9 @@ public class GameHUDController : MonoBehaviour
 
         // Map value between lowValue and highValue to position label over the slider position
         float normalizedValue = Mathf.InverseLerp(slider.lowValue, slider.highValue, value);
-        label.style.left = new StyleLength(Length.Percent(normalizedValue * 100f));
+
+        // Changed from Left to Translate to prevent CPU layout thrashing
+        label.style.translate = new Translate(new Length(normalizedValue * 100f, LengthUnit.Percent), 0);
     }
 
     private void HandlePlayerSwapped(int playerID)
@@ -171,10 +178,23 @@ public class GameHUDController : MonoBehaviour
 
     private void HandleDistanceUpdated(int playerID, float newDistance)
     {
+        // Throttle distance updates to the HUD (optimization)
         if (playerID == 1 && _p1DistanceLabel != null)
-            _p1DistanceLabel.text = $"{newDistance:F2}m";
+        {
+            if (Mathf.Abs(newDistance - _lastP1Distance) >= _distanceUpdateThreshold)
+            {
+                _p1DistanceLabel.text = $"{newDistance:F2}m";
+                _lastP1Distance = newDistance;
+            }
+        }
         else if (playerID == 2 && _p2DistanceLabel != null)
-            _p2DistanceLabel.text = $"{newDistance:F2}m";
+        {
+            if (Mathf.Abs(newDistance - _lastP2Distance) >= _distanceUpdateThreshold)
+            {
+                _p2DistanceLabel.text = $"{newDistance:F2}m";
+                _lastP2Distance = newDistance;
+            }
+        }
     }
 
     private void HandleTurnChanged(int currentTurn)
@@ -245,7 +265,9 @@ public class GameHUDController : MonoBehaviour
 
         // Map the aim offset limits directly to a 0% to 100% position on the slider track
         float normalizedValue = Mathf.InverseLerp(maxAllowedOffset, -maxAllowedOffset, currentOffset);
-        _offsetDot.style.left = new StyleLength(Length.Percent(normalizedValue * 100f));
+
+        // Changed from Left to Translate to prevent CPU layout thrashing
+        _offsetDot.style.translate = new Translate(new Length(normalizedValue * 100f, LengthUnit.Percent), 0);
     }
 
     // ==========================================
@@ -360,13 +382,13 @@ public class GameHUDController : MonoBehaviour
         // Zero out P1
         if (_p1DistanceLabel != null) _p1DistanceLabel.text = "0.00m";
         if (_p1TurnLabel != null) _p1TurnLabel.text = "0";
-        UpdateStatSlider(_p1MassSlider, _p1MassLabel, 1.0f);
-        UpdateStatSlider(_p1FrictionSlider, _p1FrictionLabel, 0.5f);
+        UpdateStatSlider(_p1MassSlider, _p1MassLabel, 1.8f);
+        UpdateStatSlider(_p1FrictionSlider, _p1FrictionLabel, 1.8f);
 
         // Zero out P2
         if (_p2DistanceLabel != null) _p2DistanceLabel.text = "0.00m";
         if (_p2TurnLabel != null) _p2TurnLabel.text = "0";
-        UpdateStatSlider(_p2MassSlider, _p2MassLabel, 1.0f);
-        UpdateStatSlider(_p2FrictionSlider, _p2FrictionLabel, 0.5f);
+        UpdateStatSlider(_p2MassSlider, _p2MassLabel, 1.8f);
+        UpdateStatSlider(_p2FrictionSlider, _p2FrictionLabel, 1.8f);
     }
 }

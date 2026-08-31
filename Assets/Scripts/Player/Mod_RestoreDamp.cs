@@ -9,6 +9,7 @@ public class Mod_RestoreDamp : MonoBehaviour, IPuckModifier
 
     public void ApplyModifier(PuckMovementController puck)
     {
-        puck.SetDamping(_defaultDamping);
+        puck.Motor.SetDamping(_defaultDamping);
+        GameEvents.OnFrictionUpdated?.Invoke(puck.MatchData.PlayerID, puck.Motor.CurrentDamping);
     }
 }
