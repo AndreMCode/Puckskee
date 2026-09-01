@@ -32,6 +32,10 @@ public class GameHUDController : MonoBehaviour
     // Offset UI
     private VisualElement _offsetContainer;
     private VisualElement _offsetDot;
+    private float _maxTravelPixels;
+    private bool _isLayoutResolved = false;
+    private float _currentOffsetCache;
+    private float _maxAllowedOffsetCache;
 
     // Minigame UI
     private VisualElement _megatonContainer;
@@ -84,6 +88,14 @@ public class GameHUDController : MonoBehaviour
         // Offset Slider queries
         _offsetContainer = root.Q<VisualElement>("offset-slider-container");
         _offsetDot = root.Q<VisualElement>("offset-dot");
+
+        // Register the callback on the track (the dot's parent)
+        if (_offsetDot != null && _offsetDot.parent != null)
+        {
+            // Hide dot initially to prevent first-frame popping
+            _offsetDot.style.visibility = Visibility.Hidden;
+            _offsetDot.parent.RegisterCallback<GeometryChangedEvent>(OnTrackLayoutResolved);
+        }
 
         // Minigame HUD queries
         _megatonContainer = root.Q<VisualElement>("meter-container");
@@ -263,11 +275,36 @@ public class GameHUDController : MonoBehaviour
     {
         if (_offsetDot == null) return;
 
-        // Map the aim offset limits directly to a 0% to 100% position on the slider track
+        // Cache these in case the method is called before layout resolves
+        _currentOffsetCache = currentOffset;
+        _maxAllowedOffsetCache = maxAllowedOffset;
+
+        if (!_isLayoutResolved) return;
+
+        // Map limits to 0.0 to 1.0 multiplier
         float normalizedValue = Mathf.InverseLerp(maxAllowedOffset, -maxAllowedOffset, currentOffset);
 
-        // Changed from Left to Translate to prevent CPU layout thrashing
-        _offsetDot.style.translate = new Translate(new Length(normalizedValue * 100f, LengthUnit.Percent), 0);
+        float pixelOffset = normalizedValue * _maxTravelPixels;
+
+        // Apply GPU translation
+        _offsetDot.style.translate = new Translate(new Length(pixelOffset, LengthUnit.Pixel), 0);
+    }
+
+    private void OnTrackLayoutResolved(GeometryChangedEvent evt)
+    {
+        var track = (VisualElement)evt.target;
+        track.UnregisterCallback<GeometryChangedEvent>(OnTrackLayoutResolved);
+
+        // Calculate maximum travel (Track Width - Dot Width)
+        float trackWidth = track.layout.width;
+        float dotWidth = _offsetDot.layout.width;
+        _maxTravelPixels = trackWidth - dotWidth;
+
+        _isLayoutResolved = true;
+        _offsetDot.style.visibility = Visibility.Visible;
+
+        // Apply the initial visual update now that we have valid dimensions
+        UpdateOffsetVisual(_currentOffsetCache, _maxAllowedOffsetCache);
     }
 
     // ==========================================

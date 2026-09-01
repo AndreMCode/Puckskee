@@ -163,6 +163,5 @@
     border-radius: 6px;
     background-color: #FF8000;
     position: absolute;
-    left: 50%;
-    translate: -50% 0;
+    left: 0;
 }
